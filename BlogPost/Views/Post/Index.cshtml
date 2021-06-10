@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Post>
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Posts</h1>
+
+<a asp-action="Create" class="btn btn-primary">Create New post</a>
+
+<br />
+<br />
+<br />
+@foreach ( var post in Model) {
+<div class="card" style="margin:80px 0">
+
+    <div class="card-body">
+        <h5 class="card-title btn btn-primary">Post Owner :@post.PublisherName</h5>
+        <p class="card-text">@post.PostContent</p>
+
+    </div>
+    <div class="card-body">
+
+        <a asp-action="Edit" asp-route-id="@post.PostId" class="card-link btn btn-success">Edit post</a>
+        <a asp-action="Details" asp-route-id="@post.PostId" class="card-link btn btn-secondary">post Details</a>
+        <a asp-action="Delete" asp-route-id="@post.PostId" class="card-link btn btn-danger">Delete post</a>
+        <a asp-controller="Comment" asp-action="Create" asp-route-postid="@post.PostId" class="card-link btn btn-danger">Create comment</a>
+    </div>
+    <div class="card-header">
+        Comments
+    </div>
+    @foreach (var comment in post.comments)
+    {
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <span class="btn btn-primary">Comment Owner: @comment.CommentPublisherName</span>
+                <div>@comment.CommentContent</div>
+                <div>
+                    <a asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.CommentId" class="card-link btn btn-success">Edit comment</a>
+                    <a asp-controller="Comment" asp-action="Details" asp-route-id="@comment.CommentId" class="card-link btn btn-secondary">Comment Details</a>
+                    <a asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.CommentId" class="card-link btn btn-danger">Delete comment</a>
+                </div>
+
+
+            </li>
+
+        </ul>
+    }
+
+
+</div>
+
+}
